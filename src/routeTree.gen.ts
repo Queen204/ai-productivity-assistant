@@ -14,7 +14,14 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as EmailRouteImport } from './routes/email'
 import { Route as MeetingsRouteImport } from './routes/meetings'
 import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as ProfileIndexRouteImport } from './routes/profile.index'
+import { Route as ProfileAboutRouteImport } from './routes/profile.about'
+import { Route as ProfileCertificatesRouteImport } from './routes/profile.certificates'
+import { Route as ProfileContactRouteImport } from './routes/profile.contact'
+import { Route as ProfileEducationRouteImport } from './routes/profile.education'
+import { Route as ProfileSkillsRouteImport } from './routes/profile.skills'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,10 +48,45 @@ const PlannerRoute = PlannerRouteImport.update({
   path: '/planner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileAboutRoute = ProfileAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileCertificatesRoute = ProfileCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileContactRoute = ProfileContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileEducationRoute = ProfileEducationRouteImport.update({
+  id: '/education',
+  path: '/education',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const ProfileSkillsRoute = ProfileSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => ProfileRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -53,7 +95,14 @@ export interface FileRoutesByFullPath {
   '/email': typeof EmailRoute
   '/meetings': typeof MeetingsRoute
   '/planner': typeof PlannerRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/research': typeof ResearchRoute
+  '/profile/about': typeof ProfileAboutRoute
+  '/profile/certificates': typeof ProfileCertificatesRoute
+  '/profile/contact': typeof ProfileContactRoute
+  '/profile/education': typeof ProfileEducationRoute
+  '/profile/skills': typeof ProfileSkillsRoute
+  '/profile/': typeof ProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +111,12 @@ export interface FileRoutesByTo {
   '/meetings': typeof MeetingsRoute
   '/planner': typeof PlannerRoute
   '/research': typeof ResearchRoute
+  '/profile/about': typeof ProfileAboutRoute
+  '/profile/certificates': typeof ProfileCertificatesRoute
+  '/profile/contact': typeof ProfileContactRoute
+  '/profile/education': typeof ProfileEducationRoute
+  '/profile/skills': typeof ProfileSkillsRoute
+  '/profile': typeof ProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,13 +125,45 @@ export interface FileRoutesById {
   '/email': typeof EmailRoute
   '/meetings': typeof MeetingsRoute
   '/planner': typeof PlannerRoute
+  '/profile': typeof ProfileRouteWithChildren
   '/research': typeof ResearchRoute
+  '/profile/about': typeof ProfileAboutRoute
+  '/profile/certificates': typeof ProfileCertificatesRoute
+  '/profile/contact': typeof ProfileContactRoute
+  '/profile/education': typeof ProfileEducationRoute
+  '/profile/skills': typeof ProfileSkillsRoute
+  '/profile/': typeof ProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/email' | '/meetings' | '/planner' | '/research'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/email'
+    | '/meetings'
+    | '/planner'
+    | '/profile'
+    | '/research'
+    | '/profile/about'
+    | '/profile/certificates'
+    | '/profile/contact'
+    | '/profile/education'
+    | '/profile/skills'
+    | '/profile/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/email' | '/meetings' | '/planner' | '/research'
+  to:
+    | '/'
+    | '/about'
+    | '/email'
+    | '/meetings'
+    | '/planner'
+    | '/research'
+    | '/profile/about'
+    | '/profile/certificates'
+    | '/profile/contact'
+    | '/profile/education'
+    | '/profile/skills'
+    | '/profile'
   id:
     | '__root__'
     | '/'
@@ -84,7 +171,14 @@ export interface FileRouteTypes {
     | '/email'
     | '/meetings'
     | '/planner'
+    | '/profile'
     | '/research'
+    | '/profile/about'
+    | '/profile/certificates'
+    | '/profile/contact'
+    | '/profile/education'
+    | '/profile/skills'
+    | '/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +187,7 @@ export interface RootRouteChildren {
   EmailRoute: typeof EmailRoute
   MeetingsRoute: typeof MeetingsRoute
   PlannerRoute: typeof PlannerRoute
+  ProfileRoute: typeof ProfileRouteWithChildren
   ResearchRoute: typeof ResearchRoute
 }
 
@@ -133,6 +228,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/research': {
       id: '/research'
       path: '/research'
@@ -140,8 +242,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/': {
+      id: '/profile/'
+      path: '/'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/about': {
+      id: '/profile/about'
+      path: '/about'
+      fullPath: '/profile/about'
+      preLoaderRoute: typeof ProfileAboutRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/certificates': {
+      id: '/profile/certificates'
+      path: '/certificates'
+      fullPath: '/profile/certificates'
+      preLoaderRoute: typeof ProfileCertificatesRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/contact': {
+      id: '/profile/contact'
+      path: '/contact'
+      fullPath: '/profile/contact'
+      preLoaderRoute: typeof ProfileContactRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/education': {
+      id: '/profile/education'
+      path: '/education'
+      fullPath: '/profile/education'
+      preLoaderRoute: typeof ProfileEducationRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/profile/skills': {
+      id: '/profile/skills'
+      path: '/skills'
+      fullPath: '/profile/skills'
+      preLoaderRoute: typeof ProfileSkillsRouteImport
+      parentRoute: typeof ProfileRoute
+    }
   }
 }
+
+interface ProfileRouteChildren {
+  ProfileAboutRoute: typeof ProfileAboutRoute
+  ProfileCertificatesRoute: typeof ProfileCertificatesRoute
+  ProfileContactRoute: typeof ProfileContactRoute
+  ProfileEducationRoute: typeof ProfileEducationRoute
+  ProfileSkillsRoute: typeof ProfileSkillsRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
+}
+
+const ProfileRouteChildren: ProfileRouteChildren = {
+  ProfileAboutRoute: ProfileAboutRoute,
+  ProfileCertificatesRoute: ProfileCertificatesRoute,
+  ProfileContactRoute: ProfileContactRoute,
+  ProfileEducationRoute: ProfileEducationRoute,
+  ProfileSkillsRoute: ProfileSkillsRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
+}
+
+const ProfileRouteWithChildren =
+  ProfileRoute._addFileChildren(ProfileRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -149,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   EmailRoute: EmailRoute,
   MeetingsRoute: MeetingsRoute,
   PlannerRoute: PlannerRoute,
+  ProfileRoute: ProfileRouteWithChildren,
   ResearchRoute: ResearchRoute,
 }
 export const routeTree = rootRouteImport

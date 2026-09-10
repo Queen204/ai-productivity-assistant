@@ -13,6 +13,7 @@ export const NAV_ITEMS: NavItem[] = [
   { to: "/meetings", label: "Meeting Summarizer", shortLabel: "Notes", icon: "📝" },
   { to: "/planner", label: "AI Task Planner", shortLabel: "Planner", icon: "🗓️" },
   { to: "/research", label: "Research Assistant", shortLabel: "Research", icon: "🔎" },
+  { to: "/profile", label: "My Profile", shortLabel: "Profile", icon: "👤" },
   { to: "/about", label: "About", shortLabel: "About", icon: "ⓘ" },
 ];
 
